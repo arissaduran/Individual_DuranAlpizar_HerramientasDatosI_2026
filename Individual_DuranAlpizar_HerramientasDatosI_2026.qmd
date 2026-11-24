@@ -1,0 +1,376 @@
+---
+title: ""
+format: typst
+editor: visual
+fontsize: 12pt
+---
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(readxl)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(tidyverse)
+library(showtext)
+library(sysfonts)
+source("cod/01_limpiar.R")
+```
+
+
+```{=typst}
+#align(center)[
+  #text(size: 16pt, weight: "bold")[Universidad de Costa Rica] \
+  #v(0.2cm)
+  #text(size: 16pt, weight: "bold")[Herramientas de Ciencias de Datos I - CA0204] \
+  #v(0.2cm)
+  #text(size: 16pt, weight: "bold")[Proyecto individual] \
+  #v(0.2cm)
+  #text(size: 16pt, weight: "bold")[Arissa Durán Alpízar - C12596]
+]
+```
+
+## Objetivo
+
+Comparar el rating de los libros con el de sus adaptaciones, con el fin de conocer las preferencias de las personas para identificar si las películas reciben una calificación diferente a la de sus libros originales.
+
+## Introducción
+
+Las adaptaciones de una obra literaria pocas veces suelen ser totalmente fieles a lo que se cuenta en los libros. Esto se puede dar por la necesidad de acortar la historia, para ajustar su duración y que no sea tan extensa, así como los cambios en los personajes o en los acontecimientos, para lograr tener un hilo conductor que les funcione. Este tipo de modificaciones pueden generar distintas reacciones entre los espectadores.
+
+Por un lado, quienes son amantes de la literatura pueden considerar que dichas modificaciones alteran la historia, por cambios en los personajes en donde no se representan bien las personalidades o sus características, o porque se eliminan momentos importantes. Por otro lado, estos cambios pueden contribuir a darle más sentido a la trama, logrando que la historia que se cuenta tenga una perspectiva que sea más atractiva.
+
+Con estas diferentes percepciones, se busca determinar si las personas muestran mayor interés en las adaptaciones, a pesar de los cambios, o si son más críticos y deciden preferir la historia original.
+
+## Datos
+
+Los datos se obtuvieron de una base de datos del proyecto Great Adaptations: Books vs Movies. Esta base contiene tanto los datos de las obras literarias como de sus adaptaciones.
+
+En cuanto a los libros se tienen sus títulos originales, el autor, el año de publicación, la calificación promedio ajustada de Goodreads y la cantidad de valoraciones obtenidas. Asimismo, para las adaptaciones se tienen los títulos de las películas, el director, el año de estreno, la calificación de IMDb y la cantidad de valoraciones obtenidas.
+
+De dicha base, se escogieron 10 libros con sus adaptaciones, según su género. En específico se seleccionaron películas de los géneros de drama-romance, fantasía y distopía.
+
+## Metodología
+
+La base de datos contiene una columna de "Rating Difference", en donde se muestra la diferencia entre la calificación del libro y de su película, para saber cuál versión tiene la calificación más alta.
+
+Si se obtienen valores mayores a 0 significa que el libro tiene una calificación más alta. Si el valor es menor a 0 se prefiere la película, y si se obtiene un valor igual a 0, se entiende que el libro y la película tuvieron la misma calificación.
+
+## Resultados
+
+## Resultados metodología:
+
+En la mayoría de los datos se presentan valoraciones más altas para las obras literarias, que para sus respectivas adaptaciones. Esto muestra que a las personas les llama más la atención la historia original, que las modificaciones que tiene la trama en las películas.
+
+#### Libros vs películas:
+
+```{r, echo=FALSE}
+drama <- df %>%
+  filter(Genre == "Drama-romance") %>%
+  mutate(
+    `Movie Title` = factor(
+      `Movie Title`,
+      levels = rev(unique(`Movie Title`))
+    )
+  ) %>%
+  pivot_longer(
+    cols = c(`Adjusted Book Rating`, `IMDB Rating`),
+    names_to = "Tipo",
+    values_to = "Rating"
+  ) %>%
+  mutate(
+    Tipo = recode(
+      Tipo,
+      "Adjusted Book Rating" = "Libro",
+      "IMDB Rating" = "Película"
+    )
+  )
+
+ggplot(
+  drama,
+  aes(
+    x = `Movie Title`,
+    y = Rating,
+    fill = Tipo
+  )
+) +
+  geom_col(
+    position = position_dodge(width = 0.8, reverse = TRUE),
+    width = 0.8
+  ) +
+  coord_flip() +
+  scale_fill_manual(
+    breaks = c("Libro", "Película"),
+    values = c(
+      "Libro" = "#ceadfe",
+      "Película" = "#d1e2ff"
+    )
+  ) +
+  scale_y_continuous(
+    limits = c(0, 10),
+    breaks = seq(0, 10, 1)
+  ) +
+  labs(
+    title = "Drama-Romance",
+    x = NULL,
+    y = "Rating",
+    fill = NULL
+  ) +
+  theme_minimal(base_size = 9) +
+  theme(
+    plot.title = element_text(
+      size = 12,
+      family = "serif",
+      face = "bold"
+    ),
+    legend.position = "top",
+    legend.key.width = unit(0.5, "cm"),
+    legend.key.height = unit(0.5, "cm"),
+    axis.text.y = element_text(size = 7),
+    axis.text.x = element_text(size = 7)
+  )
+```
+
+```{r, echo=FALSE}
+dystopia <- df %>%
+  filter(Genre == "Dystopia") %>%
+  mutate(
+    `Movie Title` = factor(
+      `Movie Title`,
+      levels = rev(unique(`Movie Title`))
+    )
+  ) %>%
+  pivot_longer(
+    cols = c(`Adjusted Book Rating`, `IMDB Rating`),
+    names_to = "Tipo",
+    values_to = "Rating"
+  ) %>%
+  mutate(
+    Tipo = recode(
+      Tipo,
+      "Adjusted Book Rating" = "Libro",
+      "IMDB Rating" = "Película"
+    )
+  )
+
+ggplot(
+  dystopia,
+  aes(
+    x = `Movie Title`,
+    y = Rating,
+    fill = Tipo
+  )
+) +
+  geom_col(
+    position = position_dodge(width = 0.8, reverse = TRUE),
+    width = 0.8
+  ) +
+  coord_flip() +
+  scale_fill_manual(
+    breaks = c("Libro", "Película"),
+    values = c(
+      "Libro" = "#FFDCC7",
+      "Película" = "#d1f1d4"
+    )
+  ) +
+  scale_y_continuous(
+    limits = c(0, 10),
+    breaks = seq(0, 10, 1)
+  ) +
+  labs(
+    title = "Distopía",
+    x = NULL,
+    y = "Rating",
+    fill = NULL
+  ) +
+  theme_minimal(base_size = 9) +
+  theme(
+    plot.title = element_text(
+      size = 12,
+      family = "serif",
+      face = "bold"
+    ),
+    legend.position = "top",
+    legend.key.width = unit(0.5, "cm"),
+    legend.key.height = unit(0.5, "cm"),
+    axis.text.y = element_text(size = 7),
+    axis.text.x = element_text(size = 7)
+  )
+```
+
+```{r, echo=FALSE}
+fantasy <- df %>%
+  filter(Genre == "Fantasy") %>%
+  mutate(
+    `Movie Title` = factor(
+      `Movie Title`,
+      levels = rev(unique(`Movie Title`))
+    )
+  ) %>%
+  pivot_longer(
+    cols = c(`Adjusted Book Rating`, `IMDB Rating`),
+    names_to = "Tipo",
+    values_to = "Rating"
+  ) %>%
+  mutate(
+    Tipo = recode(
+      Tipo,
+      "Adjusted Book Rating" = "Libro",
+      "IMDB Rating" = "Película"
+    )
+  )
+
+ggplot(
+  fantasy,
+  aes(
+    x = `Movie Title`,
+    y = Rating,
+    fill = Tipo
+  )
+) +
+  geom_col(
+    position = position_dodge(width = 0.8, reverse = TRUE),
+    width = 0.8
+  ) +
+  coord_flip() +
+  scale_fill_manual(
+    breaks = c("Libro", "Película"),
+    values = c(
+      "Libro" = "#ffd0f2",
+      "Película" = "#C5E2EA"
+    )
+  ) +
+  scale_y_continuous(
+    limits = c(0, 10),
+    breaks = seq(0, 10, 1)
+  ) +
+  labs(
+    title = "Fantasía",
+    x = NULL,
+    y = "Rating",
+    fill = NULL
+  ) +
+  theme_minimal(base_size = 9) +
+  theme(
+    plot.title = element_text(
+      size = 12,
+      family = "serif",
+      face = "bold"
+    ),
+    legend.position = "top",
+    legend.key.width = unit(0.5, "cm"),
+    legend.key.height = unit(0.5, "cm"),
+    axis.text.y = element_text(size = 6),
+    axis.text.x = element_text(size = 7)
+  )
+```
+\newpage
+
+## Análisis exploratorio de datos (AED):
+
+La diferencia entre las calificaciones de los libros y sus adaptaciones, no superan los 2.5 puntos.
+
+```{r, echo=FALSE}
+#| fig-width: 7
+#| fig-height: 3
+#| fig-align: center
+#| 
+diferencias <- df %>%
+  mutate(
+    diferencia = abs(`Adjusted Book Rating` - `IMDB Rating`)
+  )
+
+ggplot(diferencias, aes(y = diferencia, x = 1)) +
+  geom_jitter(
+    width = 0.05,
+    color = "#7cbfb6",
+    size = 2
+  ) +
+  scale_x_continuous(
+    breaks = NULL,
+    labels = NULL
+  ) +
+    scale_y_continuous(
+    limits = c(0, 3),
+    breaks = seq(0, 3, 0.5)
+  ) +
+  labs(
+    title = "Diferencias entre los libros y sus adaptaciones",
+    x = NULL,
+    y = "Diferencias en rating"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(
+      family = "serif",
+      face = "italic",
+      size = 14,
+      hjust = 0.5
+    )
+  )
+
+
+```
+
+Entre los géneros que tienen mayor diferencia, sobresale el de drama-romance, en donde los libros, en su mayoría, obtuvieron una mejor valoración que sus adaptaciones. Sin embargo, también se observa que es el género en donde se obtienen las menores diferencias.
+
+```{r, echo=FALSE}
+#| fig-width: 7
+#| fig-height: 3
+#| fig-align: center
+diferencias.g <- df %>%
+  mutate(
+    diferencia = abs(`Adjusted Book Rating` - `IMDB Rating`)
+  )
+
+ggplot(diferencias.g, aes(y = diferencia, x = 1, color = Genre)) +
+  geom_jitter(
+    width = 0.05,
+    size = 2
+  ) +
+  scale_color_manual(
+    values = c(
+      "Fantasy" = "#ceadfe",
+      "Dystopia" = "#feadce",
+      "Drama-romance" = "#7cbfb6"
+    ),
+    labels = c(
+    "Fantasy" = "Fantasía",
+    "Dystopia" = "Distopía",
+    "Drama-romance" = "Drama-Romance"
+  )
+  ) +
+  scale_x_continuous(
+    breaks = NULL,
+    labels = NULL
+  ) +
+  labs(
+    title = "Diferencia según su género",
+    x = NULL,
+    y = "Diferencia en rating",
+    color = "Género"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(
+      family = "serif",
+      face = "italic",
+      size = 14,
+      hjust = 0.5
+    )
+  )
+
+```
+
+\newpage
+
+## Conclusiones
+
+A partir del rating de diferencia, se puede identificar que aunque los directores y escritores logran transmitir una historia con sus adaptaciones, las personas muestran una mayor preferencia por la historia original y más completa, que encuentran en los libros.
+
+En ocasiones se tienen altas expectativas de dichas adaptaciones, ya que al tener preferencia en un libro, las personas esperan que se represente cada parte de este, hasta el mínimo detalle, pero por duración y para lograr una coherencia en la película, no siempre logran abarcar en su totalidad la historia del libro, como lo desea el lector.
+
+\newpage
+
+## Referencias
+
+The Book People. (s. f.). Great Adaptations: Books vs Movies. http://www.tbp-books-vs-films.iprospecthosting.com/
+
