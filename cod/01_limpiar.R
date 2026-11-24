@@ -3,7 +3,7 @@ library(readxl)
 
 datos <- read_excel("data/The Book People - Books VS Film Adaptation.xlsx")
 
-tabla <- datos |>
+df <- datos |>
   filter(`Book Title` %in% c(
     "Harry Potter and the philosopher's stone",
     "Harry Potter and the Chamber of Secrets",
