@@ -4,6 +4,7 @@ format: typst
 editor: visual
 fontsize: 12pt
 ---
+
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 library(readxl)
 library(dplyr)
@@ -14,7 +15,6 @@ library(showtext)
 library(sysfonts)
 source("cod/01_limpiar.R")
 ```
-
 
 ```{=typst}
 #align(center)[
@@ -27,7 +27,6 @@ source("cod/01_limpiar.R")
   #text(size: 16pt, weight: "bold")[Arissa Durán Alpízar - C12596]
 ]
 ```
-
 ## Objetivo
 
 Comparar el rating de los libros con el de sus adaptaciones, con el fin de conocer las preferencias de las personas para identificar si las películas reciben una calificación diferente a la de sus libros originales.
@@ -84,14 +83,7 @@ drama <- df %>%
     )
   )
 
-ggplot(
-  drama,
-  aes(
-    x = `Movie Title`,
-    y = Rating,
-    fill = Tipo
-  )
-) +
+drama.romance <- ggplot(drama, aes(x = `Movie Title`, y = Rating, fill = Tipo)) +
   geom_col(
     position = position_dodge(width = 0.8, reverse = TRUE),
     width = 0.8
@@ -127,6 +119,7 @@ ggplot(
     axis.text.y = element_text(size = 7),
     axis.text.x = element_text(size = 7)
   )
+ggsave("info/drama.romance.png", width = 8, height = 5, dpi = 300, bg = "white")
 ```
 
 ```{r, echo=FALSE}
@@ -151,14 +144,7 @@ dystopia <- df %>%
     )
   )
 
-ggplot(
-  dystopia,
-  aes(
-    x = `Movie Title`,
-    y = Rating,
-    fill = Tipo
-  )
-) +
+distopia <- ggplot(dystopia, aes(x = `Movie Title`, y = Rating,  fill = Tipo)) +
   geom_col(
     position = position_dodge(width = 0.8, reverse = TRUE),
     width = 0.8
@@ -194,6 +180,7 @@ ggplot(
     axis.text.y = element_text(size = 7),
     axis.text.x = element_text(size = 7)
   )
+ggsave("info/distopia.png", width = 8, height = 5, dpi = 300, bg = "white")
 ```
 
 ```{r, echo=FALSE}
@@ -218,14 +205,7 @@ fantasy <- df %>%
     )
   )
 
-ggplot(
-  fantasy,
-  aes(
-    x = `Movie Title`,
-    y = Rating,
-    fill = Tipo
-  )
-) +
+fantasia <- ggplot(fantasy, aes(x = `Movie Title`, y = Rating, fill = Tipo)) +
   geom_col(
     position = position_dodge(width = 0.8, reverse = TRUE),
     width = 0.8
@@ -261,7 +241,9 @@ ggplot(
     axis.text.y = element_text(size = 6),
     axis.text.x = element_text(size = 7)
   )
+ggsave("info/fantasia.png", width = 8, height = 5, dpi = 300, bg = "white")
 ```
+
 \newpage
 
 ## Análisis exploratorio de datos (AED):
@@ -373,4 +355,3 @@ En ocasiones se tienen altas expectativas de dichas adaptaciones, ya que al tene
 ## Referencias
 
 The Book People. (s. f.). Great Adaptations: Books vs Movies. http://www.tbp-books-vs-films.iprospecthosting.com/
-
