@@ -33,7 +33,7 @@ Comparar el rating de los libros con el de sus adaptaciones, con el fin de conoc
 
 ## Introducción
 
-Las adaptaciones de una obra literaria pocas veces suelen ser totalmente fieles a lo que se cuenta en los libros. Esto se puede dar por la necesidad de acortar la historia, para ajustar su duración y que no sea tan extensa, así como los cambios en los personajes o en los acontecimientos, para lograr tener un hilo conductor que les funcione. Este tipo de modificaciones pueden generar distintas reacciones entre los espectadores.
+Las adaptaciones de una obra literaria pocas veces suelen ser totalmente fieles a lo que se cuenta en los libros. Esto se puede dar por la necesidad de acortar la historia para ajustar su duración y que no sea tan extensa, así como los cambios en los personajes o en los acontecimientos, para lograr tener un hilo conductor que les funcione. Este tipo de modificaciones pueden generar distintas reacciones entre los espectadores.
 
 Por un lado, quienes son amantes de la literatura pueden considerar que dichas modificaciones alteran la historia, por cambios en los personajes en donde no se representan bien las personalidades o sus características, o porque se eliminan momentos importantes. Por otro lado, estos cambios pueden contribuir a darle más sentido a la trama, logrando que la historia que se cuenta tenga una perspectiva que sea más atractiva.
 
@@ -51,13 +51,13 @@ De dicha base, se escogieron 10 libros con sus adaptaciones, según su género. 
 
 La base de datos contiene una columna de "Rating Difference", en donde se muestra la diferencia entre la calificación del libro y de su película, para saber cuál versión tiene la calificación más alta.
 
-Si se obtienen valores mayores a 0 significa que el libro tiene una calificación más alta. Si el valor es menor a 0 se prefiere la película, y si se obtiene un valor igual a 0, se entiende que el libro y la película tuvieron la misma calificación.
+Según la base utilizada, si se obtienen valores mayores a 0 significa que el libro tiene una calificación más alta. Si el valor es menor a 0 se prefiere la película, y si se obtiene un valor igual a 0, se entiende que el libro y la película tuvieron la misma calificación.
 
 ## Resultados
 
 ## Resultados metodología:
 
-En la mayoría de los datos se presentan valoraciones más altas para las obras literarias, que para sus respectivas adaptaciones. Esto muestra que a las personas les llama más la atención la historia original, que las modificaciones que tiene la trama en las películas.
+En la mayoría de los datos se presentan valoraciones más altas para las obras literarias, que para sus respectivas adaptaciones. Con estos datos, se puede interpretar que a las personas les llama más la atención la historia original que la trama en las películas, que pueden ser diferentes.
 
 #### Libros vs películas:
 
@@ -119,6 +119,7 @@ drama.romance <- ggplot(drama, aes(x = `Movie Title`, y = Rating, fill = Tipo)) 
     axis.text.y = element_text(size = 7),
     axis.text.x = element_text(size = 7)
   )
+drama.romance
 ggsave("info/drama.romance.png", width = 8, height = 5, dpi = 300, bg = "white")
 ```
 
@@ -180,6 +181,7 @@ distopia <- ggplot(dystopia, aes(x = `Movie Title`, y = Rating,  fill = Tipo)) +
     axis.text.y = element_text(size = 7),
     axis.text.x = element_text(size = 7)
   )
+distopia
 ggsave("info/distopia.png", width = 8, height = 5, dpi = 300, bg = "white")
 ```
 
@@ -241,6 +243,7 @@ fantasia <- ggplot(fantasy, aes(x = `Movie Title`, y = Rating, fill = Tipo)) +
     axis.text.y = element_text(size = 6),
     axis.text.x = element_text(size = 7)
   )
+fantasia
 ggsave("info/fantasia.png", width = 8, height = 5, dpi = 300, bg = "white")
 ```
 
@@ -343,6 +346,11 @@ ggplot(diferencias.g, aes(y = diferencia, x = 1, color = Genre)) +
 ```
 
 \newpage
+
+## Limitaciones
+1. No se conoce si las personas que realizaron las valoraciones en Goodreads son las mismas que votaron por la película en IMDb.
+
+2. Al utilizar los promedios de las calificaciones, no se toma en cuenta si la cantidad de votos en ambas páginas tiene mucha diferencia, lo que podría cambiar los resultados.
 
 ## Conclusiones
 
