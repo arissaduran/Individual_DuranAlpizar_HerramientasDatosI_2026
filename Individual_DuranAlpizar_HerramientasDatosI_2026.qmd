@@ -104,20 +104,27 @@ drama.romance <- ggplot(drama, aes(x = `Movie Title`, y = Rating, fill = Tipo)) 
     title = "Drama-Romance",
     x = NULL,
     y = "Rating",
-    fill = NULL
+    fill = NULL,
+    caption = "Fuente: Elaboración propia con datos de Great Adaptations: Books vs Movies (s. f.)."
   ) +
   theme_minimal(base_size = 9) +
   theme(
-    plot.title = element_text(
-      size = 12,
-      family = "serif",
-      face = "bold"
-    ),
-    legend.position = "top",
-    legend.key.width = unit(0.5, "cm"),
-    legend.key.height = unit(0.5, "cm"),
-    axis.text.y = element_text(size = 7),
-    axis.text.x = element_text(size = 7)
+  plot.title = element_text(
+    size = 12,
+    family = "serif",
+    face = "bold",
+    hjust = 0.5
+  ),
+  plot.caption = element_text(
+    size = 8,
+    hjust = 0
+  ),
+  plot.caption.position = "plot",
+  legend.position = "top",
+  legend.key.width = unit(0.5, "cm"),
+  legend.key.height = unit(0.5, "cm"),
+  axis.text.y = element_text(size = 7),
+  axis.text.x = element_text(size = 7)
   )
 drama.romance
 ggsave("info/drama.romance.png", width = 8, height = 5, dpi = 300, bg = "white")
@@ -166,20 +173,27 @@ distopia <- ggplot(dystopia, aes(x = `Movie Title`, y = Rating,  fill = Tipo)) +
     title = "Distopía",
     x = NULL,
     y = "Rating",
-    fill = NULL
+    fill = NULL,
+    caption = "Fuente: Elaboración propia con datos de Great Adaptations: Books vs Movies (s. f.)."
   ) +
   theme_minimal(base_size = 9) +
   theme(
-    plot.title = element_text(
-      size = 12,
-      family = "serif",
-      face = "bold"
-    ),
-    legend.position = "top",
-    legend.key.width = unit(0.5, "cm"),
-    legend.key.height = unit(0.5, "cm"),
-    axis.text.y = element_text(size = 7),
-    axis.text.x = element_text(size = 7)
+  plot.title = element_text(
+    size = 12,
+    family = "serif",
+    face = "bold",
+    hjust = 0.5
+  ),
+  plot.caption = element_text(
+    size = 8,
+    hjust = 0
+  ),
+  plot.caption.position = "plot",
+  legend.position = "top",
+  legend.key.width = unit(0.5, "cm"),
+  legend.key.height = unit(0.5, "cm"),
+  axis.text.y = element_text(size = 7),
+  axis.text.x = element_text(size = 7)
   )
 distopia
 ggsave("info/distopia.png", width = 8, height = 5, dpi = 300, bg = "white")
@@ -228,21 +242,28 @@ fantasia <- ggplot(fantasy, aes(x = `Movie Title`, y = Rating, fill = Tipo)) +
     title = "Fantasía",
     x = NULL,
     y = "Rating",
-    fill = NULL
+    fill = NULL,
+    caption = "Fuente: Elaboración propia con datos de Great Adaptations: Books vs Movies (s. f.)."
   ) +
   theme_minimal(base_size = 9) +
   theme(
-    plot.title = element_text(
-      size = 12,
-      family = "serif",
-      face = "bold"
-    ),
-    legend.position = "top",
-    legend.key.width = unit(0.5, "cm"),
-    legend.key.height = unit(0.5, "cm"),
-    axis.text.y = element_text(size = 6),
-    axis.text.x = element_text(size = 7)
-  )
+  plot.title = element_text(
+    size = 12,
+    family = "serif",
+    face = "bold",
+    hjust = 0.5
+  ),
+  plot.caption = element_text(
+    size = 8,
+    hjust = 0
+  ),
+  plot.caption.position = "plot",
+  legend.position = "top",
+  legend.key.width = unit(0.5, "cm"),
+  legend.key.height = unit(0.5, "cm"),
+  axis.text.y = element_text(size = 6),
+  axis.text.x = element_text(size = 7)
+)
 fantasia
 ggsave("info/fantasia.png", width = 8, height = 5, dpi = 300, bg = "white")
 ```
@@ -280,16 +301,22 @@ ggplot(diferencias, aes(y = diferencia, x = 1)) +
   labs(
     title = "Diferencias entre los libros y sus adaptaciones",
     x = NULL,
-    y = "Diferencias en rating"
+    y = "Diferencias en rating",
+    caption = "Fuente: Elaboración propia con datos de Great Adaptations: Books vs Movies (s. f.)."
   ) +
   theme_minimal() +
   theme(
-    plot.title = element_text(
-      family = "serif",
-      face = "italic",
-      size = 14,
-      hjust = 0.5
-    )
+  plot.title = element_text(
+    family = "serif",
+    face = "italic",
+    size = 14,
+    hjust = 0.5
+  ),
+  plot.caption = element_text(
+    size = 8,
+    hjust = 0
+  ),
+  plot.caption.position = "plot"
   )
 
 
@@ -331,16 +358,22 @@ ggplot(diferencias.g, aes(y = diferencia, x = 1, color = Genre)) +
     title = "Diferencia según su género",
     x = NULL,
     y = "Diferencia en rating",
-    color = "Género"
+    color = "Género",
+    caption = "Fuente: Elaboración propia con datos de Great Adaptations: Books vs Movies (s. f.)."
   ) +
   theme_minimal() +
   theme(
-    plot.title = element_text(
-      family = "serif",
-      face = "italic",
-      size = 14,
-      hjust = 0.5
-    )
+  plot.title = element_text(
+    family = "serif",
+    face = "italic",
+    size = 14,
+    hjust = 0.5
+  ),
+  plot.caption = element_text(
+    size = 8,
+    hjust = 0
+  ),
+  plot.caption.position = "plot"
   )
 
 ```
